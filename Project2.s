@@ -1,6 +1,6 @@
 .section .data
   prompt_msg:  .ascii "The double is: "
-  prompt_len:  . - prompt_msg
+  prompt_len = . - prompt_msg
 
 .section .bss
   .lcomm buffer, 16
