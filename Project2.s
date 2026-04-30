@@ -32,3 +32,25 @@ convert_loop:
   xor %rdx, %rdx
   div %rcx
   add $48, %dl
+  mov %dl, (%rdi)
+  cmp $0, %rax
+  jne convert_loop
+
+  mov $1, %rax
+  mov $1, %rdi
+  mov $prompt_msg, %rsi
+  mov %prompt_len, %rdx
+  syscall
+
+  mov $1, %rax
+  mov $1, %rdi
+  mov %rdi, %rsi
+  mov $out_buf, %rdx
+  add $16, %rdx
+  sub %rsi, %rdx
+  mov $1, %rdi
+  syscall
+
+  mov $60, %rax
+  xor %rdi, %rdi
+  syscall
