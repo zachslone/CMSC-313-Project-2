@@ -57,7 +57,7 @@ convert_loop:
   jne convert_loop
 
   # printing "The double is: "
-  push $rdi
+  push %rdi
   mov $1, %rax
   mov $1, %rdi
   mov $prompt_msg, %rsi
