@@ -53,7 +53,7 @@ convert_loop:
   mov $1, %rax
   mov $1, %rdi
   mov $prompt_msg, %rsi
-  mov $prompt_len, %rdx
+  mov prompt_len, %rdx
   syscall
 
   mov $1, %rax
