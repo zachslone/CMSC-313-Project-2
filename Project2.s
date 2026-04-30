@@ -17,16 +17,30 @@ _start:
   mov $16, %rdx
   syscall
 
-  movzbq (buffer), %rax
-  sub $48, %rax
+  xor %rax, %rax
+  mov $buffer, %rsi
 
+convert_input:
+  movzx (%rsi), %rdx
+  cmp $10, %dl
+  je done_convert
+  cmp $0, %dl
+  je done_convert
+  
+  sub $48, %rdx
+  imul $10, %rax
+  add %rdx, %rax
+  inc %rsi
+  jmp convert_input
+
+done_convert:
   add %rax, %rax
 
   mov $10, %rcx
   mov $out_buf, %rdi
   add $15, %rdi
   movb $10, (%rdi)
-
+  
 convert_loop:
   dec %rdi
   xor %rdx, %rdx
