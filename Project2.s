@@ -11,15 +11,16 @@
   .globl _start
 
 _start:
+  # reading characters from input
   mov $0, %rax
   mov $0, %rdi
   mov $buffer, %rsi
   mov $16, %rdx
   syscall
 
+  # string to int conversion
   xor %rax, %rax
   mov $buffer, %rsi
-
 convert_input:
   movzx (%rsi), %rdx
   cmp $10, %dl
@@ -34,8 +35,10 @@ convert_input:
   jmp convert_input
 
 done_convert:
+  # doubling the input
   add %rax, %rax
-
+  
+  # int back to string conversion for output
   mov $10, %rcx
   mov $out_buf, %rdi
   add $15, %rdi
@@ -50,19 +53,20 @@ convert_loop:
   cmp $0, %rax
   jne convert_loop
 
+  # printing "The double is: "
   mov $1, %rax
   mov $1, %rdi
   mov $prompt_msg, %rsi
   mov prompt_len, %rdx
   syscall
 
+  # printing the result of the doubling
+  mov %rdi, %rsi
   mov $1, %rax
   mov $1, %rdi
-  mov %rdi, %rsi
   mov $out_buf, %rdx
   add $16, %rdx
   sub %rsi, %rdx
-  mov $1, %rdi
   syscall
 
   mov $60, %rax
