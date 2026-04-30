@@ -1,7 +1,6 @@
 .section .data
   prompt_msg:  .ascii "The double is: "
-  prompt_len:  .quad . - prompt_msg
-  newline:     .ascii "\n"
+  prompt_len:  . - prompt_msg
 
 .section .bss
   .lcomm buffer, 16
@@ -25,12 +24,16 @@ convert_input:
   movzx (%rsi), %rdx
   cmp $10, %dl
   je done_convert
-  cmp $0, %dl
-  je done_convert
+  cmp $48, %dl
+  jl skip_char
+  cmp $57, %dl
+  jg skip_char
   
   sub $48, %rdx
   imul $10, %rax
   add %rdx, %rax
+  
+skip_char:
   inc %rsi
   jmp convert_input
 
@@ -54,14 +57,15 @@ convert_loop:
   jne convert_loop
 
   # printing "The double is: "
+  push $rdi
   mov $1, %rax
   mov $1, %rdi
   mov $prompt_msg, %rsi
-  mov prompt_len, %rdx
+  mov $prompt_len, %rdx
   syscall
 
   # printing the result of the doubling
-  mov %rdi, %rsi
+  pop %rsi
   mov $out_buf, %rdx
   add $16, %rdx
   sub %rsi, %rdx
