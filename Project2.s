@@ -62,11 +62,11 @@ convert_loop:
 
   # printing the result of the doubling
   mov %rdi, %rsi
-  mov $1, %rax
-  mov $1, %rdi
   mov $out_buf, %rdx
   add $16, %rdx
   sub %rsi, %rdx
+  mov $1, %rax
+  mov $1, %rdi
   syscall
 
   mov $60, %rax
