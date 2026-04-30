@@ -1,8 +1,8 @@
-First Step
+First Step:
 as -o double.o double.s
 
-Second Step
+Second Step:
 ld -o double double.o
 
-Run Program
+Run Program:
 ./double
